@@ -19,7 +19,7 @@ class PyUCL:
     @classmethod
     async def create(cls, client_id: str, client_secret: str, code: str, session: aiohttp.ClientSession = None):
         cls.loop = asyncio.get_running_loop()
-        if session is not None:
+        if session is None:
             cls.session = aiohttp.ClientSession(loop=cls.loop)
 
         params = {
