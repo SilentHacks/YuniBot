@@ -15,6 +15,7 @@ class PyUCL:
     def __init__(self, token: str):
         """:meta private:"""
         self.token = token
+        print(self.token)
 
     @classmethod
     async def create(cls, client_id: str, client_secret: str, code: str, session: aiohttp.ClientSession = None):
