@@ -28,6 +28,7 @@ class Webserver(commands.Cog):
 
     async def _webhook(self):
         async def webhook_handler(request):
+            print(1, request)
             req_auth = request.headers.get('client_id')
             if self.webhook_auth == req_auth:
                 data = await request.json()
