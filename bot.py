@@ -75,6 +75,7 @@ if __name__ == '__main__':
     try:
         bot.loop.run_until_complete(bot.start(DISCORD_TOKEN))
     except KeyboardInterrupt:
+        bot.unload_extension('cogs.webserver')
         for task in asyncio.all_tasks(loop=bot.loop):
             print(task.__repr__())
             task.cancel()
