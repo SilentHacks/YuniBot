@@ -12,9 +12,10 @@ class PyUCL:
     session: aiohttp.ClientSession = None
     loop: asyncio.AbstractEventLoop = None
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, client_secret: str):
         """:meta private:"""
         self.token = token
+        self.client_secret = client_secret
 
     @classmethod
     async def create(cls, client_id: str, client_secret: str, code: str, session: aiohttp.ClientSession = None):
@@ -33,7 +34,7 @@ class PyUCL:
             if r.status != 200:
                 raise ValueError(resp.get('error'))
 
-        return cls(resp.get('token'))
+        return cls(resp.get('token'), client_secret)
 
     async def get_personal_timetable(self, date: str = None) -> dict:
         """
@@ -46,8 +47,6 @@ class PyUCL:
         :class:`dict`
             A dict of the response.
         """
-        print(1, self.client_secret)
-
         params = {
             'client_secret': self.client_secret,
             'token': self.token
