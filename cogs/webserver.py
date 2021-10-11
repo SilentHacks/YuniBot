@@ -23,17 +23,14 @@ class Webserver(commands.Cog):
 
     @commands.Cog.listener()
     async def on_callback(self, data):
-        print(data)
+        print('callback: ', data)
 
     async def _webhook(self):
         async def webhook_handler(request):
-            print(1, request)
-            print(request.rel_url.query)
-            print(request.headers)
-            req_auth = request.headers.get('client_id')
+            data = request.rel_url.query
+            req_auth = data.get('client_id')
             if self.webhook_auth == req_auth:
-                data = await request.json()
-                if data.get('result'):
+                if data.get('result') == 'allowed':
                     event_name = 'callback'
                 else:
                     return
