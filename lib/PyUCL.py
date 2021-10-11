@@ -46,6 +46,7 @@ class PyUCL:
         :class:`dict`
             A dict of the response.
         """
+        print(1, self.client_secret)
 
         params = {
             'client_secret': self.client_secret,
