@@ -41,7 +41,7 @@ class Webserver(commands.Cog):
                 return web.Response(status=401)
 
         ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-        ssl_context.load_cert_chain('/etc/ssl/certs/apache-selfsigned.crt', '/etc/ssl/private/apache-selfsigned.key')
+        ssl_context.load_cert_chain('domain_srv.crt', 'domain_srv.key')
 
         app = web.Application(loop=self.bot.loop)
         app.router.add_post(self.webhook_path, webhook_handler)
