@@ -8,32 +8,32 @@ class PyUCL:
     client_id: str = None
     client_secret: str = None
     code: str = None
+    token: str = None
     session: aiohttp.ClientSession = None
+    loop: asyncio.AbstractEventLoop = None
 
-    def __init__(self, client_id: str, client_secret: str, code: str, session: aiohttp.ClientSession = None):
+    def __init__(self, token: str):
         """:meta private:"""
+        self.token = token
 
-        self.client_id = client_id
-        self.client_secret = client_secret
-        self.code = code
-        self.loop = asyncio.get_running_loop()
+    @classmethod
+    async def create(cls, client_id: str, client_secret: str, code: str, session: aiohttp.ClientSession = None):
+        cls.loop = asyncio.get_running_loop()
         if session is not None:
-            self.session = aiohttp.ClientSession(loop=self.loop)
+            cls.session = aiohttp.ClientSession(loop=cls.loop)
 
-        self.token = self.loop.run_until_complete(self._get_token())
-
-    async def _get_token(self):
         params = {
-            "client_id": self.client_id,
-            "client_secret": "secret",
-            "code": self.code
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "code": code
         }
-        async with self.session.get("https://uclapi.com/oauth/token", params=params) as r:
+
+        async with cls.session.get("https://uclapi.com/oauth/token", params=params) as r:
             resp = await r.json()
             if r.status != 200:
                 raise ValueError(resp.get('error'))
 
-        return resp.get('token')
+        return cls(resp.get('token'))
 
     async def get_personal_timetable(self, date: str = None) -> dict:
         """
