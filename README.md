@@ -4,10 +4,12 @@ YuniBot is a Discord bot that gives users an on/off campus role, depending on wh
 
 ## Installation
 
-Pip install the requirements.txt
+Pip install the requirements.txt. 
+You also need an SSL certificate which you can self-sign with something like this:
 
 ```bash
 pip install -r requirements.txt
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout domain_srv.key -out domain_srv.crt
 ```
 
 ## Usage
