@@ -44,7 +44,7 @@ class Webserver(commands.Cog):
         ssl_context.load_cert_chain('domain_srv.crt', 'domain_srv.key')
 
         app = web.Application(loop=self.bot.loop)
-        app.router.add_post(self.webhook_path, webhook_handler)
+        app.router.add_get(self.webhook_path, webhook_handler)
         runner = web.AppRunner(app)
         await runner.setup()
         self._webserver = web.TCPSite(runner, '0.0.0.0', self.webhook_port, ssl_context=ssl_context)
