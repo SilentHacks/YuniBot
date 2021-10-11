@@ -15,7 +15,6 @@ class PyUCL:
     def __init__(self, token: str):
         """:meta private:"""
         self.token = token
-        print(self.token)
 
     @classmethod
     async def create(cls, client_id: str, client_secret: str, code: str, session: aiohttp.ClientSession = None):
@@ -48,7 +47,10 @@ class PyUCL:
             A dict of the response.
         """
 
-        params = {'client_secret': self.token}
+        params = {
+            'client_secret': self.client_secret,
+            'token': self.token
+        }
         if date:
             params['date'] = date
 
