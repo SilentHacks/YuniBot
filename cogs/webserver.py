@@ -12,7 +12,7 @@ class Webserver(commands.Cog):
         self.bot = bot
         self._webserver = None
         self.webhook_path = '/callback'
-        self.webhook_port = 5005
+        self.webhook_port = 5000
         self.webhook_auth = UCL_CLIENT_ID
         self._is_closed = False
 
