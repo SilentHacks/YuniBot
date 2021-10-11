@@ -3,7 +3,8 @@ import ssl
 from aiohttp import web
 from discord.ext import commands
 
-from lib.config import UCL_CLIENT_ID
+from lib.config import UCL_CLIENT_ID, UCL_CLIENT_SECRET
+from lib.PyUCL import PyUCL
 
 
 class Webserver(commands.Cog):
@@ -24,6 +25,9 @@ class Webserver(commands.Cog):
     @commands.Cog.listener()
     async def on_callback(self, data):
         print('callback: ', data)
+        py_ucl = PyUCL(client_id=UCL_CLIENT_ID, client_secret=UCL_CLIENT_SECRET, code=data.get("code"))
+        timetable = py_ucl.get_personal_timetable()
+        print(timetable)
 
     async def _webhook(self):
         async def webhook_handler(request):

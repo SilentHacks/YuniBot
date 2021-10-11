@@ -1,5 +1,6 @@
 aiohttp==3.7.4.post0
 async-timeout==3.0.1
+asyncpg==0.24.0
 attrs==21.2.0
 cffi==1.14.6
 chardet==4.0.0
