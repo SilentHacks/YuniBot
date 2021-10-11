@@ -26,7 +26,7 @@ class Webserver(commands.Cog):
     async def on_callback(self, data):
         print('callback: ', data)
         py_ucl = PyUCL(client_id=UCL_CLIENT_ID, client_secret=UCL_CLIENT_SECRET, code=data.get("code"))
-        timetable = py_ucl.get_personal_timetable()
+        timetable = await py_ucl.get_personal_timetable()
         print(timetable)
 
     async def _webhook(self):
