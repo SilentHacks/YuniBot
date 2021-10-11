@@ -1,4 +1,5 @@
 import ssl
+import pprint
 
 from aiohttp import web
 from discord.ext import commands
@@ -27,7 +28,9 @@ class Webserver(commands.Cog):
         print('callback: ', data)
         py_ucl = await PyUCL.create(client_id=UCL_CLIENT_ID, client_secret=UCL_CLIENT_SECRET, code=data.get("code"))
         timetable = await py_ucl.get_personal_timetable()
-        print(timetable)
+
+        pp = pprint.PrettyPrinter(indent=4)
+        pp.pprint(timetable)
 
     async def _webhook(self):
         async def webhook_handler(request):
