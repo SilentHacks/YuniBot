@@ -1,3 +1,5 @@
+import ssl
+
 from aiohttp import web
 from discord.ext import commands
 
@@ -38,11 +40,14 @@ class Webserver(commands.Cog):
             else:
                 return web.Response(status=401)
 
+        ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        ssl_context.load_cert_chain('/etc/ssl/certs/apache-selfsigned.crt', '/etc/ssl/private/apache-selfsigned.key')
+
         app = web.Application(loop=self.bot.loop)
         app.router.add_post(self.webhook_path, webhook_handler)
         runner = web.AppRunner(app)
         await runner.setup()
-        self._webserver = web.TCPSite(runner, '0.0.0.0', self.webhook_port)
+        self._webserver = web.TCPSite(runner, '0.0.0.0', self.webhook_port, ssl_context=ssl_context)
         await self._webserver.start()
 
     async def _close(self):
