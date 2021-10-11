@@ -4,7 +4,6 @@ import discord
 from discord.ext import commands
 
 from lib.config import DEFAULT_PREFIX, DISCORD_TOKEN, SLASH_GUILD
-from lib.YuniBot import YuniBot
 
 # Handling intents
 intents = discord.Intents.default()
@@ -18,7 +17,7 @@ def determine_prefix(discord_bot, message):
     return commands.when_mentioned_or(*default_prefixes)(discord_bot, message)
 
 
-bot = YuniBot(command_prefix=determine_prefix, case_insensitive=True, intents=intents, slash_guild=SLASH_GUILD)
+bot = commands.Bot(command_prefix=determine_prefix, case_insensitive=True, intents=intents, slash_guild=SLASH_GUILD)
 
 
 @bot.event
