@@ -3,7 +3,7 @@ import asyncio
 import discord
 from discord.ext import commands
 
-from lib.config import DEFAULT_PREFIX, TOKEN, SLASH_GUILD
+from lib.config import DEFAULT_PREFIX, DISCORD_TOKEN, SLASH_GUILD
 from lib.YuniBot import YuniBot
 
 # Handling intents
@@ -74,7 +74,7 @@ if __name__ == '__main__':
         bot.load_extension(f'cogs.{extension}')
 
     try:
-        bot.loop.run_until_complete(bot.start(TOKEN))
+        bot.loop.run_until_complete(bot.start(DISCORD_TOKEN))
     except KeyboardInterrupt:
         for task in asyncio.all_tasks(loop=bot.loop):
             print(task.__repr__())

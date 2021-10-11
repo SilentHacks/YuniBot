@@ -1,10 +1,7 @@
-import os
-
 from aiohttp import web
 from discord.ext import commands
-from dotenv import load_dotenv
 
-load_dotenv()
+from lib.config import UCL_CLIENT_ID
 
 
 class Webserver(commands.Cog):
@@ -14,7 +11,7 @@ class Webserver(commands.Cog):
         self._webserver = None
         self.webhook_path = '/callback'
         self.webhook_port = 6000
-        self.webhook_auth = os.getenv('UCL_CLIENT_ID')
+        self.webhook_auth = UCL_CLIENT_ID
         self._is_closed = False
 
         self.webhook_task = self.bot.loop.create_task(self._webhook())
